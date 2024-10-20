@@ -1,0 +1,48 @@
+.glass{
+background: rgba(198, 195, 195, 0.42);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.2px);
+-webkit-backdrop-filter: blur(5.2px);
+/* border: 1px solid rgba(166, 165, 165, 0.75); */
+}
+.coverimg{
+    background-image: url('./assest/coverimg/clear.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.outborder{
+border-radius: 24px;
+border-right: 1px solid rgba(213, 211, 211, 0.78);
+/* height: 90vh; */
+}
+.search_border{
+    border-bottom: 1px solid rgba(213, 211, 211, 0.78);
+    padding: 0px 2px;
+    color:rgba(213, 211, 211, 0.78);
+}
+.font33{
+    font-weight: lighter;
+    &:hover{
+        color:black
+    }
+}
+body{
+    color: rgb(249, 249, 249);
+}
+.active{
+    color:aliceblue;
+    background-color: black;
+}
+.convert button:hover{
+    background-color: rgba(63, 61, 61, 0.753);
+}
+.tag{
+    background-color: rgba(240, 248, 255, 0.243);
+    border-radius: 20px;
+    padding: 2px 7px;
+}
+.alert_border{
+    border-bottom: 1px solid rgba(213, 211, 211, 0.78);
+}

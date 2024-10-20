@@ -1,10 +1,12 @@
 
 import './App.css';
+import Main from './component/main/Main';
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>hii</h1>
+    <div className={`coverimg h-[100vh] relative content-center`}>
+      <Main/>
     </div>
   );
 }
