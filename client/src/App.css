@@ -7,7 +7,7 @@ backdrop-filter: blur(3.2px);
 /* border: 1px solid rgba(166, 165, 165, 0.75); */
 }
 .coverimg{
-    background-image: url('./assest/coverimg/clear.jpg');
+    background-image: url('./assest/coverimg/thunder.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
