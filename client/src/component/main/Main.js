@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTemperatureThreeQuarters, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Air,getDirection,WeImg,Threshold } from './function';
+import { Air,getDirection,WeImg,Threshold,validatecity } from './function';
 
 
 
@@ -230,27 +230,27 @@ function Main() {
                             </div>
                                 <div className='w-full flex flex-wrap justify-evenly'>
                                     <button className='cursor-pointer' onClick={() => (clickHandle("Mumbai"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'>12°</div>
+                                        <div className='text-[50px] font-thin'></div>
                                         <p className='font-thin'>Mumbai</p>
                                     </div></button>
                                     <button className='cursor-pointer' onClick={() => (clickHandle("Delhi"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'>12°</div>
+                                        <div className='text-[50px] font-thin'></div>
                                         <p className='font-thin'>Delhi</p>
                                     </div></button>
                                     <button className='cursor-pointer' onClick={() => (clickHandle("Bangalore"))}><div className='p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'>12°</div>
+                                        <div className='text-[50px] font-thin'></div>
                                         <p className='font-thin'>Bangalore</p>
                                     </div></button>
                                     <button className='cursor-pointer' onClick={() => (clickHandle("Chennai"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'>12°</div>
+                                        <div className='text-[50px] font-thin'></div>
                                         <p className='font-thin'>Chennai</p>
                                     </div></button>
                                     <button className='cursor-pointer' onClick={() => (clickHandle("Kolkata"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'>12°</div>
+                                        <div className='text-[50px] font-thin'></div>
                                         <p className='font-thin'>Kolkata</p>
                                     </div></button>
                                     <button className='cursor-pointer' onClick={() => (clickHandle("Hyderabad"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'>12°</div>
+                                        <div className='text-[50px] font-thin'></div>
                                         <p className='font-thin'>Hyderabad</p>
                                     </div></button>
                                 </div>

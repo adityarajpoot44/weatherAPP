@@ -17,8 +17,14 @@ app.post('/input', (req, res) => {
 
     console.log('Received form data:', req.body);
     console.log(req.body)
-    cityName=req.body["Cityname"]
-    currentCityName = cityName;
+    let temp=req.body["Cityname"]
+    axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${temp}&limit=1&appid=${apiKey}`)
+    .then(()=>(
+        currentCityName=req.body["Cityname"]
+    )).catch((error)=>(
+        console.log(error),
+        currentCityName="Aligarh"
+    ))
     unit=req.body["unit"]
 
   });

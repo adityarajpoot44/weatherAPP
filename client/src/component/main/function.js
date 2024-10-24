@@ -34,23 +34,23 @@ export function getDirection(angle) {
 
 export function WeImg(main) {
     switch (main) {
-        case "clear":
+        case "Clear":
             return weatherimg["sun"];
-        case "clouds":
+        case "Clouds":
             return weatherimg["sun_cloud"];
         case "scattered clouds":
             return weatherimg["cloud"];
-        case "shower rain":
+        case "Shower rain":
             return weatherimg["sun_cloudrain"];
         case "Rain":
             return weatherimg["rain_rain"];
-        case "thunderstorm":
+        case "Thunderstorm":
             return weatherimg["thunder"];
-        case "snow":
+        case "Snow":
             return weatherimg["snowflake"];
         case "Haze":
             return weatherimg["mist"];
-        case "fog":
+        case "Fog":
             return weatherimg["mist"];
         case "Mist":
             return weatherimg["mist"];
@@ -61,5 +61,16 @@ export function WeImg(main) {
 }
 
 export function Threshold() {
-
+    const value=15
+    
 }
+
+// export function validatecity(city){
+
+   
+//         axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=59ccdc0e6d25ad5bc6cd8d162304dbed`)
+//         .then((response)=>(
+            
+//         ))
+    
+// }
