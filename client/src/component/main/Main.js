@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTemperatureThreeQuarters, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Air,getDirection,WeImg,Threshold,validatecity } from './function';
+import { Air,getDirection,WeImg,Threshold } from './function';
 
 
 
@@ -38,6 +38,7 @@ function Main() {
     const [degree,setDegree] =useState()
     const [currentweatherimg, setWeatherimg] = useState('')
     const [unit,setUnit] = useState('metric')
+    const [alert2,setalert2] =useState('')
 
     function update(response) {
         const api = response.data
@@ -61,7 +62,6 @@ function Main() {
         setWeatherimg(WeImg(api.weather[0].main))
 
     }
-
      useEffect(() => {
         axios.get("/data")
         .then((response) => {
@@ -75,13 +75,15 @@ function Main() {
         setDate(dates.getDate())
         setDay((weekday[dates.getDay()]).toUpperCase())
         setMonth(dates.toLocaleString('default', { month: "short" }))
+        if(Threshold(temp)){
+            setalert2("critical temprature")
+        }
         const interval = setInterval(() => (
             setTime(new Date())
         ), 1000);
         return () => {
             clearInterval(interval);
         };
-
     }, [converter,clickHandle])
 
 
@@ -111,7 +113,7 @@ function Main() {
             console.error('Error submitting City Name:', error)
         })
     }
-    
+
    
     return (
         <>
@@ -221,7 +223,7 @@ function Main() {
                                     </div>
                                     <div className='flex w-full h-[25vh] flex-col glass rounded-xl p-2'>
                                         <h4 className='text-center font-lighter text-red-500 pb-2'>Alerts</h4>
-                                        <p className='alert_border px-1'>Snow very fast compare</p>
+                                        <p className='alert_border px-1'>{alert2}</p>
                                     </div>
                                 </div>
                             </div>

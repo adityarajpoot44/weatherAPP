@@ -60,9 +60,13 @@ export function WeImg(main) {
 
 }
 
-export function Threshold() {
+export function Threshold(temp) {
     const value=15
-    
+    if(temp===value){
+        return true
+    }
+    return false
+
 }
 
 // export function validatecity(city){
