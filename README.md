@@ -10,11 +10,11 @@ Open the folder in code editor\
 run the terminal 
 ## run the below commond
 ### In parent folder
-`cd install`\
+`npm install`\
 `nodemon server/index.js`
 
 ### In Client folder
-`cd install`\
+`npm install`\
 `npm run start`
 
 

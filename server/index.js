@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 const port = process.env.PORT || 3001;
-const apiKey = process.env.WEATHER_API_KEY;
+const apiKey = '59ccdc0e6d25ad5bc6cd8d162304dbed';
 let currentCityName = 'Aligarh';
 let unit = "metric"
 
