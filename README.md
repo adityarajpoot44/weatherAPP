@@ -1,10 +1,15 @@
-# Getting Started with Create React App
+# Getting Started with Weather App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Develop a real-time data processing system to monitor weather conditions and provide
+summarized insights using rollups and aggregates. The system will utilize data from the [OpenWeatherMap API](https://openweathermap.org/).
 
-## Available Scripts
+## Steps to set up the App
 
-In the project directory, you can run:
+Downlode the zip File
+Open the folder in code editor
+run the terminal 
+## run the below commond 
+
 
 ### `npm start`
 
