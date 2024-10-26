@@ -1,6 +1,5 @@
-import axios from 'axios';
-import weather from '../../assest/werther/sun.png'
-import { weatherimg, coverimg } from '../../assest/img';
+
+import { weatherimg } from '../../assest/img';
 
 
 
@@ -17,6 +16,8 @@ export function Air(num) {
             return "Poor";
         case 5:
             return "Very Poor";
+        default:
+            return "Moderate";
     }
 }
 
@@ -54,8 +55,9 @@ export function WeImg(main) {
             return weatherimg["mist"];
         case "Mist":
             return weatherimg["mist"];
-        case "Smoke":
+       default:
             return weatherimg["mist"];
+        
 
 
     }
