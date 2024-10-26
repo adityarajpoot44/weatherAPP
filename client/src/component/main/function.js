@@ -54,6 +54,8 @@ export function WeImg(main) {
             return weatherimg["mist"];
         case "Mist":
             return weatherimg["mist"];
+        case "Smoke":
+            return weatherimg["mist"];
 
 
     }
