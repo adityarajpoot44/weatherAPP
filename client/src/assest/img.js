@@ -1,7 +1,9 @@
-import clear from './coverimg/clear.jpg'
+
+import cloud from './coverimg/cloud.jpg'
 import rain from './coverimg/rain.jpg'
-import raindrop1 from './coverimg/raindrop1.jpg'
-import raindrop2 from './coverimg/raindrop2.jpg'
+import snow from './coverimg/snow.jpg'
+import fog from './coverimg/fog.jpg'
+import haze from './coverimg/haze.jpg'
 import suncover from './coverimg/sun.jpg'
 import thundercover from './coverimg/thunder.jpg'
 import sun from './werther/sun.png'
@@ -9,7 +11,6 @@ import sun_cloudrain from './werther/sun_cloudrain.png'
 import sun_cloud from './werther/sun_cloud.png'
 import snowflake from './werther/snowflake.png'
 import cloud_rain from './werther/cloud_rain.png'
-import cloud from './werther/cloud.png'
 import rain_rain from './werther/rain_rain.png'
 import thunder from './werther/thunder.png'
 import mist from './werther/mist.png'
@@ -26,11 +27,10 @@ export const weatherimg = {
 }
 
 export const coverimg = {
-    clear,
+    cloud,
+    fog,haze,
     rain,
-    raindrop1,
-    raindrop2,
+    snow,
     suncover,
     thundercover,
-    sun,cloud
 }

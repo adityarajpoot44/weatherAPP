@@ -1,5 +1,5 @@
 
-import { weatherimg } from '../../assest/img';
+import { weatherimg,coverimg } from '../../assest/img';
 
 export function Air(num) {
     switch (num) {
@@ -29,7 +29,32 @@ export function getDirection(angle) {
     return directions[section];
 }
 
-
+export function backcoverImg(apidata){
+    switch (apidata) {
+        case "Clear":
+            return coverimg["snow"];
+        case "Clouds":
+            return coverimg["cloud"];
+        case "scattered clouds":
+            return coverimg["cloud"];
+        case "Shower rain":
+            return coverimg["rain"];
+        case "Rain":
+            return coverimg["rain"];
+        case "Thunderstorm":
+            return coverimg["thundercover"];
+        case "Snow":
+            return coverimg["snow"];
+        case "Haze":
+            return coverimg["haze"];
+        case "Fog":
+            return coverimg["fog"];
+        case "Mist":
+            return coverimg["fog"];
+       default:
+            return coverimg["fog"];
+    }
+}
 export function WeImg(main) {
     switch (main) {
         case "Clear":
@@ -54,9 +79,6 @@ export function WeImg(main) {
             return weatherimg["mist"];
        default:
             return weatherimg["mist"];
-        
-
-
     }
 
 }

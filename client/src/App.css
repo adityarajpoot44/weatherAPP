@@ -6,9 +6,8 @@ backdrop-filter: blur(3.2px);
 -webkit-backdrop-filter: blur(5.2px);
 /* border: 1px solid rgba(166, 165, 165, 0.75); */
 }
-.coverimg{
-    background-image: url('./assest/coverimg/thunder.jpg');
-    background-size: cover;
+.coverimg{ 
+    background-size: cover; 
     background-repeat: no-repeat;
     background-attachment: fixed;
     width: 100%;
