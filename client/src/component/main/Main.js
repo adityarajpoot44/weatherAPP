@@ -1,26 +1,19 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTemperatureThreeQuarters, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import axios from 'axios';
-import { Air,getDirection,WeImg,Threshold } from './function';
+import { Air,getDirection,WeImg } from './function';
+import { DateTime } from './Datetime';
 
+const apiKey = '59ccdc0e6d25ad5bc6cd8d162304dbed';
 
-
+console.log("outer")
 function Main() {
-
-    
-    
-    // const backimg = document.querySelectorAll('.coverimg')
-    // console.log(backimg)
-
-    const [day, setDay] = useState('');
-    const [date, setDate] = useState('');
-    const [month, setMonth] = useState('');
-    const [time, setTime] = useState(new Date());
+    console.log("outer fun")
     const [temp, setTemp] = useState('0');
     const [sky, setSky] = useState('0');
-    const [city, setCity] = useState('')
+    const [city, setCity] = useState('Aligarh')
     const [name, setName] = useState('')
     const [roomtemp, setRoomtemp] = useState('')
     const [htemp, setHtemp] = useState('')
@@ -33,15 +26,21 @@ function Main() {
     const [uvIndex, setUVindex] = useState('3')
     const [apiUpdate, setApiupdate] = useState('')
     const [nh3, setnh3] = useState('')
-    const [nh, setnh] = useState()
-    const [dis,setDis]=useState()
+    const [nh, setnh] = useState(null)
+    const [dis,setDis]=useState(null)
     const [degree,setDegree] =useState()
     const [currentweatherimg, setWeatherimg] = useState('')
     const [unit,setUnit] = useState('metric')
-    const [alert2,setalert2] =useState('')
+    const [mumbai,setmumbai]=useState(null);
+    const [delhi,setdelhi]=useState(null);
+    const [Chennai,setChennai]=useState(null);
+    const [Bangalore,setBangalore]=useState(null);
+    const [Hyderabad,setHyderabad]=useState(null);
+    const [Kolkata,setKolkata]=useState(null);
+    const textInputRef = useRef(null);
 
     function update(response) {
-        const api = response.data
+        const api = response
         setTemp((parseInt(api.main.temp)))
         setSky(api.weather[0].main)
         setName(api.name)
@@ -62,56 +61,51 @@ function Main() {
         setWeatherimg(WeImg(api.weather[0].main))
 
     }
-     useEffect(() => {
-        axios.get("/data")
-        .then((response) => {
-            console.log("api front line 15", response.data)
-            update(response)// update is a function 
-        }).catch((error) => {
-            console.log(error)
-        })
-        const dates = new Date();
-        const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        setDate(dates.getDate())
-        setDay((weekday[dates.getDay()]).toUpperCase())
-        setMonth(dates.toLocaleString('default', { month: "short" }))
-        if(Threshold(temp)){
-            setalert2("critical temprature")
+    async function apiCall(city){
+
+        const geoLocationUrl =`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`
+        const geoResponse = await axios.get(geoLocationUrl)
+        const {lat,lon} =geoResponse.data[0]
+
+        const weatherUrl=`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${unit}&appid=${apiKey}`
+        const currentResponse = await axios.get(weatherUrl)
+
+        const airPollutionUrl= `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`
+        const airResponse = await axios.get(airPollutionUrl)
+
+        const apidata={
+            ...currentResponse.data,
+            ...airResponse.data
         }
-        const interval = setInterval(() => (
-            setTime(new Date())
-        ), 1000);
-        return () => {
-            clearInterval(interval);
-        };
-    }, [converter,clickHandle])
+        update(apidata)
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Mumbai&units=${unit}&appid=${apiKey}`).then((data)=>(setmumbai(parseInt(data.data.main.temp))))
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=delhi&units=${unit}&appid=${apiKey}`).then((data)=>(setdelhi(parseInt(data.data.main.temp))))
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Bangalore&units=${unit}&appid=${apiKey}`).then((data)=>(setBangalore(parseInt(data.data.main.temp))))
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Chennai&units=${unit}&appid=${apiKey}`).then((data)=>(setChennai(parseInt(data.data.main.temp))))
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Kolkata&units=${unit}&appid=${apiKey}`).then((data)=>(setKolkata(parseInt(data.data.main.temp))))
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Hyderabad&units=${unit}&appid=${apiKey}`).then((data)=>(setHyderabad(parseInt(data.data.main.temp))))
+    }
 
+    useEffect(()=>{
+        apiCall(city)
+    },[city,unit])
 
+    useEffect(()=>{
+        const updateTimer=setTimeout(() => {
+            apiCall(city)
+        }, 1000*5*60);
+        return ()=>clearInterval(updateTimer)
+    })
+
+   
     function converter() {
         var checkBox = document.getElementById("myCheck");
-        if (checkBox.checked === true){
-             setUnit("imperial")
-        }else{
-    
-            setUnit("metric")
-        }
-        console.log(unit)
-        apicall(name,unit)
+        (checkBox.checked? setUnit("imperial") : setUnit("metric"))
     }
     function handleform(e) {
         e.preventDefault()
-        apicall(city,unit)
-    }
-
-    function clickHandle(city) {
-        apicall(city,unit)
-    }
-    function apicall(Cityname,unit) {
-        axios.post('/input', { Cityname,unit }).then((response) => (
-            console.log("sent city name")
-        )).catch((error) => {
-            console.error('Error submitting City Name:', error)
-        })
+        const enteredText = textInputRef.current.value;
+        setCity(enteredText)
     }
 
    
@@ -123,7 +117,7 @@ function Main() {
                         <form onSubmit={handleform}>
                             <div className='w-full flex items-center search_border mb-5'>
                                 <FontAwesomeIcon icon={faTemperatureThreeQuarters} size='lg' className='pb-2' />
-                                <input value={city} onChange={(e) => (setCity(e.target.value))} className='w-full placeholder:italic placeholder:text-white bg-transparent outline-none text-gray-100 text-[12px] pl-5' type='text' placeholder='Search City' />
+                                <input ref={textInputRef} className='w-full placeholder:italic placeholder:text-white bg-transparent outline-none text-gray-100 text-[12px] pl-5' type='text' placeholder='Search City' />
                                 <button><FontAwesomeIcon icon={faMagnifyingGlass} className='font33 pb-1' /></button>
 
                             </div>
@@ -135,20 +129,12 @@ function Main() {
                             <span className='text-[100px] font-thin'>{temp}°</span>
                             <span className='absolute right-5 top-10 text-[11px] tag'>{sky}</span>
                         </div>
-                        <div className=''>
-                            <p className='text-[15px]'><span>{date}, </span>
-                                <span>{month}</span>
-                            </p>
-                            <div className='flex gap-2 text-[25px]'>
-                                <span className='text-black'>{day},</span>
-                                <span>{time.toLocaleTimeString()}</span>
-                            </div>
-                            <div className=' mt-7 tag'>
+                        <DateTime/>
+                        <div className=' mt-7 tag'>
                                 <h2 className='pt-2 pl-2'>{name} City</h2>
                                 <p className='text-[12px] py-3 pl-2 text-gray-700'>{name} is currently experiencing {dis} with a temperature of {temp} °C.The humidity is {humidity}%. Winds are blowing from {degree} at {wind} km/h 
                                 </p>
                             </div>
-                        </div>
                     </div>
                     <div className='p-6'>
                         <div className=''>
@@ -223,7 +209,7 @@ function Main() {
                                     </div>
                                     <div className='flex w-full h-[25vh] flex-col glass rounded-xl p-2'>
                                         <h4 className='text-center font-lighter text-red-500 pb-2'>Alerts</h4>
-                                        <p className='alert_border px-1'>{alert2}</p>
+                                        <p className='alert_border px-1'></p>
                                     </div>
                                 </div>
                             </div>
@@ -231,28 +217,28 @@ function Main() {
 
                             </div>
                                 <div className='w-full flex flex-wrap justify-evenly'>
-                                    <button className='cursor-pointer' onClick={() => (clickHandle("Mumbai"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'></div>
+                                    <button className='cursor-pointer' onClick={() => (setCity("Mumbai"))}><div className=' p-4 rounded-xl'>
+                                        <div className='text-[50px] font-thin'>{mumbai}°</div>
                                         <p className='font-thin'>Mumbai</p>
                                     </div></button>
-                                    <button className='cursor-pointer' onClick={() => (clickHandle("Delhi"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'></div>
+                                    <button className='cursor-pointer' onClick={() => (setCity("Delhi"))}><div className=' p-4 rounded-xl'>
+                                        <div className='text-[50px] font-thin'>{delhi}°</div>
                                         <p className='font-thin'>Delhi</p>
                                     </div></button>
-                                    <button className='cursor-pointer' onClick={() => (clickHandle("Bangalore"))}><div className='p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'></div>
+                                    <button className='cursor-pointer' onClick={() => (setCity("Bangalore"))}><div className='p-4 rounded-xl'>
+                                        <div className='text-[50px] font-thin'>{Bangalore}°</div>
                                         <p className='font-thin'>Bangalore</p>
                                     </div></button>
-                                    <button className='cursor-pointer' onClick={() => (clickHandle("Chennai"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'></div>
+                                    <button className='cursor-pointer' onClick={() => (setCity("Chennai"))}><div className=' p-4 rounded-xl'>
+                                        <div className='text-[50px] font-thin'>{Chennai}°</div>
                                         <p className='font-thin'>Chennai</p>
                                     </div></button>
-                                    <button className='cursor-pointer' onClick={() => (clickHandle("Kolkata"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'></div>
+                                    <button className='cursor-pointer' onClick={() => (setCity("Kolkata"))}><div className=' p-4 rounded-xl'>
+                                        <div className='text-[50px] font-thin'>{Kolkata}°</div>
                                         <p className='font-thin'>Kolkata</p>
                                     </div></button>
-                                    <button className='cursor-pointer' onClick={() => (clickHandle("Hyderabad"))}><div className=' p-4 rounded-xl'>
-                                        <div className='text-[50px] font-thin'></div>
+                                    <button className='cursor-pointer' onClick={() => (setCity("Hyderabad"))}><div className=' p-4 rounded-xl'>
+                                        <div className='text-[50px] font-thin'>{Hyderabad}°</div>
                                         <p className='font-thin'>Hyderabad</p>
                                     </div></button>
                                 </div>

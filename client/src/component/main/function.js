@@ -1,9 +1,6 @@
 
 import { weatherimg } from '../../assest/img';
 
-
-
-
 export function Air(num) {
     switch (num) {
         case 1:
