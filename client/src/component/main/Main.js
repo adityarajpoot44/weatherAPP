@@ -6,9 +6,12 @@ import axios from 'axios';
 import { Air,getDirection,WeImg } from './function';
 import { DateTime } from './Datetime';
 
-const apiKey = '59ccdc0e6d25ad5bc6cd8d162304dbed';
+
+const apiKey = process.env.REACT_APP_API_KEY;
+
 
 console.log("outer")
+
 function Main() {
     console.log("outer fun")
     const [temp, setTemp] = useState('0');

@@ -2,11 +2,11 @@ import { useEffect, useState } from "react"
 
 export const DateTime = () => {
 
-    const [date, setDate] = useState("12")
-    const [month, setMonth] = useState("NOV")
-    const [day, setDay] = useState("MONDAY")
+    const [date, setDate] = useState(null)
+    const [month, setMonth] = useState(null)
+    const [day, setDay] = useState(null)
     const [time, setTime] = useState(new Date());
-
+    console.log("Date")
     useEffect(() => {
 
         const dates = new Date();
@@ -18,7 +18,7 @@ export const DateTime = () => {
             setTime(new Date())
         },1000)
         return () => clearInterval(timer);
-    })
+    },[date])
    
     return (
         <div className=''>
